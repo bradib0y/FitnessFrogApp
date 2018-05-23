@@ -84,7 +84,15 @@ namespace Treehouse.FitnessFrog.Controllers
 
             SetupActivitiesSelectList();
 
-            return View();
+            if (id != null)
+            {
+                int i = Convert.ToInt32(id);
+                return View(_entriesRepository.GetEntry(i));
+            }
+            else {
+                return View();
+            }
+        
         }
 
         [HttpPost]
