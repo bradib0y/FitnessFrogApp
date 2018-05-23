@@ -74,7 +74,7 @@ namespace Treehouse.FitnessFrog.Models
         /// <summary>
         /// The duration for the entry (in minutes).
         /// </summary>
-        public double Duration { get; set; }
+                public double Duration { get; set; }
 
         /// <summary>
         /// The level of intensity for the entry.
