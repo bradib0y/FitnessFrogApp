@@ -43,25 +43,36 @@ namespace Treehouse.FitnessFrog.Controllers
         {
             var entry = new Entry();
             entry.Date = DateTime.Today.Date;
-            ViewBag.ActivitySelectList = new SelectList(Treehouse.FitnessFrog.Data.Data.Activities, "Id", "Name");
+            SetupActivitiesSelectList();
             return View(entry);
         }
 
         [HttpPost]
         public ActionResult Add(Entry entry)
         {
-            if (ModelState.IsValidField("Duration") && entry.Duration <= 0)
-            {
-                ModelState.AddModelError("Duration", "The Duration field value must be greater than 0.");
-            }
+            ValidateForm(entry);
 
             if (ModelState.IsValid)
             {
                 _entriesRepository.AddEntry(entry);
                 return RedirectToAction("Index");
             }
-            ViewBag.ActivitySelectList = new SelectList(Treehouse.FitnessFrog.Data.Data.Activities, "Id", "Name");
+
+            SetupActivitiesSelectList();
             return View(entry);
+        }
+
+        private void SetupActivitiesSelectList()
+        {
+            ViewBag.ActivitySelectList = new SelectList(Treehouse.FitnessFrog.Data.Data.Activities, "Id", "Name");
+        }
+
+        private void ValidateForm(Entry entry)
+        {
+            if (ModelState.IsValidField("Duration") && entry.Duration <= 0)
+            {
+                ModelState.AddModelError("Duration", "The Duration field value must be greater than 0.");
+            }
         }
 
         public ActionResult Edit(int? id)
@@ -71,7 +82,24 @@ namespace Treehouse.FitnessFrog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            SetupActivitiesSelectList();
+
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Entry entry)
+        {
+            ValidateForm(entry);
+
+            if (ModelState.IsValid)
+            {
+                _entriesRepository.UpdateEntry(entry);
+                return RedirectToAction("Index");
+            }
+            SetupActivitiesSelectList();
+
+            return View(entry);
         }
 
         public ActionResult Delete(int? id)
