@@ -7,11 +7,11 @@
 
 <h2>@ViewBag.Title</h2>
 
-@Html.ValidationSummary("We have problems with the following:", new { @class = "alert alert-danger" })
+
 
 @using (Html.BeginForm())
 {
-
+    @Html.ValidationSummary("We have problems with the following:", new { @class = "alert alert-danger" })
     <div class="row">
 
         <div class="col-md-6">
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        
+
 
     </div>
 
