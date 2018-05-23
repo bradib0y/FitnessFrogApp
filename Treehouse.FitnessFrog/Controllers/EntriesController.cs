@@ -84,15 +84,16 @@ namespace Treehouse.FitnessFrog.Controllers
 
             SetupActivitiesSelectList();
 
-            if (id != null)
+            try
             {
                 int i = Convert.ToInt32(id);
                 return View(_entriesRepository.GetEntry(i));
             }
-            else {
+            catch (Exception e)
+            {
                 return View();
             }
-        
+
         }
 
         [HttpPost]
@@ -116,8 +117,24 @@ namespace Treehouse.FitnessFrog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            SetupActivitiesSelectList();
 
-            return View();
+            try { 
+                int i = Convert.ToInt32(id);
+                return View(_entriesRepository.GetEntry(i));
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Entry entry)
+        {
+            _entriesRepository.DeleteEntry(entry.Id);
+
+            return RedirectToAction("Index");
         }
     }
 }
