@@ -35,7 +35,7 @@ namespace Treehouse.FitnessFrog.Controllers
 
             ViewBag.TotalActivity = totalActivity;
             ViewBag.AverageDailyActivity = (totalActivity / (double)numberOfActiveDays);
-
+            if (TempData["SuccessMessage"] != null) { ViewBag.SuccessMessage = TempData["SuccessMessage"]; }
             return View(entries);
         }
 
@@ -55,6 +55,7 @@ namespace Treehouse.FitnessFrog.Controllers
             if (ModelState.IsValid)
             {
                 _entriesRepository.AddEntry(entry);
+                TempData["SuccessMessage"] = "Your new entry was successfully added!";
                 return RedirectToAction("Index");
             }
 
@@ -104,6 +105,7 @@ namespace Treehouse.FitnessFrog.Controllers
             if (ModelState.IsValid)
             {
                 _entriesRepository.UpdateEntry(entry);
+                TempData["SuccessMessage"] = "Your changes were successfully saved!";
                 return RedirectToAction("Index");
             }
             SetupActivitiesSelectList();
@@ -133,7 +135,7 @@ namespace Treehouse.FitnessFrog.Controllers
         public ActionResult Delete(Entry entry)
         {
             _entriesRepository.DeleteEntry(entry.Id);
-
+            TempData["SuccessMessage"] = "Undesirable entry successfully deleted!";
             return RedirectToAction("Index");
         }
     }
