@@ -9,7 +9,7 @@ namespace Treehouse.FitnessFrog.Data
     /// Note: The code in this class is not to be considered a "best practice" 
     /// example of how to do data persistence, but rather as workaround for
     /// not having a database to persist data to.
-    /// </summary>
+    /// </summary>    
     public static class Data
     {
         /// <summary>
@@ -64,6 +64,8 @@ namespace Treehouse.FitnessFrog.Data
 
             Activities = activities;
             Entries = entries;
+
+             string CommandText = "create table if not exists entries (id INTEGER PRIMARY KEY AUTOINCREMENT, date text not null default date('now'), activityid integer not null references activities(id), duration real not null, intensityid integer not null references intensities(id), exclude boolean, notes text);";
         }
     }
 }

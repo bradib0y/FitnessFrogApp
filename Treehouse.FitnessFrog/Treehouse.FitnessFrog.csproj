@@ -132,6 +132,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EntriesController.cs" />
     <Compile Include="Data\ActivitiesRepository.cs" />
+    <Compile Include="Data\ConnectDb.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\EntriesRepository.cs" />
     <Compile Include="Global.asax.cs">

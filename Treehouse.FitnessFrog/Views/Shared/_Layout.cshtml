@@ -46,6 +46,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
+                <a href="@Url.Action("DropDb", "Entries")" style="visibility: @GetAddEntryButtonVisibility()"
+                   class="btn btn-danger navbar-btn navbar-right">
+                    <span class="glyphicon glyphicon-floppy-remove"></span> Drop Database
+                </a>
+                <a href="@Url.Action("CreateDb", "Entries")" style="visibility: @GetAddEntryButtonVisibility()"
+                   class="btn btn-info navbar-btn navbar-right">
+                    <span class="glyphicon glyphicon-cloud"></span> Create Database
+                </a>
                 <a href="@Url.Action("Add", "Entries")" style="visibility: @GetAddEntryButtonVisibility()"
                    class="btn btn-primary navbar-btn navbar-right">
                     <span class="glyphicon glyphicon-plus"></span> Add Entry

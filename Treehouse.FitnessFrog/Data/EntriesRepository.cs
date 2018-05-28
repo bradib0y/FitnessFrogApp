@@ -57,7 +57,7 @@ namespace Treehouse.FitnessFrog.Data
 
             return entry;
         }
-
+        
         /// <summary>
         /// Adds an entry.
         /// </summary>

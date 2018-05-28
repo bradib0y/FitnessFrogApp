@@ -138,5 +138,18 @@ namespace Treehouse.FitnessFrog.Controllers
             TempData["SuccessMessage"] = "Undesirable entry successfully deleted!";
             return RedirectToAction("Index");
         }
+                
+        public ActionResult CreateDb()
+        {
+            ConnectDb c = new ConnectDb();
+            c.CreateDb();
+            return RedirectToAction("Index");
+        }
+                
+        public ActionResult DropDb()
+        {
+
+            return RedirectToAction("Index");
+        }
     }
 }
