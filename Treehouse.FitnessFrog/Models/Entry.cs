@@ -13,9 +13,9 @@ namespace Treehouse.FitnessFrog.Models
         /// </summary>
         public enum IntensityLevel
         {
-            Low,
-            Medium,
-            High
+            Low =1,
+            Medium =2 ,
+            High=3
         }
 
         /// <summary>

@@ -137,47 +137,78 @@ namespace Treehouse.FitnessFrog.Data
                     cmdCreate.ExecuteNonQuery();
 
                     // 3. execute data insertion commands into the already existing tables
-                        // 3.1 intensity levels
-                        cmdCreate.CommandText = "insert into intensities (" +
-                                    "id, intensity) values (" +
-                                    "1, 'Low');";
-                        cmdCreate.ExecuteNonQuery();
-                        cmdCreate.CommandText = "insert into intensities (" +
-                                    "id, intensity) values (" +
-                                    "2, 'Medium');";
-                        cmdCreate.ExecuteNonQuery();
-                        cmdCreate.CommandText = "insert into intensities (" +
-                                    "id, intensity) values (" +
-                                    "3, 'High');";
-                        cmdCreate.ExecuteNonQuery();
+                    // 3.1 intensity levels
+                    cmdCreate.CommandText = "insert into intensities (" +
+                                "id, intensity) values (" +
+                                "1, 'Low');";
+                    cmdCreate.ExecuteNonQuery();
+                    cmdCreate.CommandText = "insert into intensities (" +
+                                "id, intensity) values (" +
+                                "2, 'Medium');";
+                    cmdCreate.ExecuteNonQuery();
+                    cmdCreate.CommandText = "insert into intensities (" +
+                                "id, intensity) values (" +
+                                "3, 'High');";
+                    cmdCreate.ExecuteNonQuery();
 
-                        // 3.2 activities
-                        foreach (Activity a in Data.Activities)
-                        {
-                            cmdCreate.CommandText = "insert into activities (" +
-                                        "id, activity) values (" +
-                                        a.Id.ToString() + ", '" +
-                                        a.Name + "');";
-                            cmdCreate.ExecuteNonQuery();
-                        }
+                    // 3.2 activities
+                    foreach (Activity a in Data.Activities)
+                    {
+                        cmdCreate.CommandText = "insert into activities (" +
+                                    "id, activity) values (" +
+                                    a.Id.ToString() + ", '" +
+                                    a.Name + "');";
+                        cmdCreate.ExecuteNonQuery();
+                    }
 
-                        // 3.3 entries
-                        foreach (Entry e in Data.Entries)
-                        {
-                            cmdCreate.CommandText = "insert into entries (" +
-                                        "id, date, activityid, duration, intensityid, exclude, notes) values (" +
-                                        e.Id.ToString() + ", '" +
-                                        e.Date.ToString() + "', " +
-                                        e.ActivityId.ToString() + ", " +
-                                        e.Duration.ToString() + ", " +
-                                        "2, null, null);";
-                            cmdCreate.ExecuteNonQuery();
-                        }
+                    // 3.3 entries
+                    foreach (Entry e in Data.Entries)
+                    {
+                        cmdCreate.CommandText = "insert into entries (" +
+                                    "id, date, activityid, duration, intensityid, exclude, notes) values (" +
+                                    e.Id.ToString() + ", '" +
+                                    e.Date.ToString() + "', " +
+                                    e.ActivityId.ToString() + ", " +
+                                    e.Duration.ToString() + ", " +
+                                    "2, null, null);";
+                        cmdCreate.ExecuteNonQuery();
+                    }
 
                     // 4. closing connection
                     connectDb.Close();
                 }
                 return true; // if success
+            }
+        }
+
+        /// <summary>
+        /// Adds an entry.
+        /// </summary>
+        /// <param name="entry">The entry to add.</param>
+        public void AddEntry(Entry e)
+        {
+            using (System.Data.SQLite.SQLiteConnection connectDb = new System.Data.SQLite.SQLiteConnection("Data Source=C:\\sqlite\\something.db"))
+            {
+                using (System.Data.SQLite.SQLiteCommand cmdCreate = new System.Data.SQLite.SQLiteCommand(connectDb))
+                {
+                    // 1. open connection
+                    connectDb.Open();
+
+                    // 2. insert
+                    cmdCreate.CommandText = "insert into entries (" +
+            "id, date, activityid, duration, intensityid, exclude, notes) values (" +
+            e.Id.ToString() + ", '" +
+            e.Date.ToString() + "', " +
+            e.ActivityId.ToString() + ", " +
+            e.Duration.ToString() + ", " +
+            Convert.ToInt32(e.Intensity) + ", " +
+            Convert.ToInt32(e.Exclude) + ", " + // exclude property, might cause an error
+            (!String.IsNullOrEmpty(e.Notes) ? ("'" + e.Notes + "'") : "null") + ");";
+                    cmdCreate.ExecuteNonQuery();
+
+                    // 4. closing connection
+                    connectDb.Close();
+                }
             }
         }
     }

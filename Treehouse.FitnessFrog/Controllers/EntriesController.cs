@@ -54,7 +54,8 @@ namespace Treehouse.FitnessFrog.Controllers
 
             if (ModelState.IsValid)
             {
-                _entriesRepository.AddEntry(entry);
+                ConnectDb c = new ConnectDb();
+                c.AddEntry(entry);
                 TempData["SuccessMessage"] = "Your new entry was successfully added!";
                 return RedirectToAction("Index");
             }
