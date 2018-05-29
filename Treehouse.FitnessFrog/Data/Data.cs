@@ -64,8 +64,7 @@ namespace Treehouse.FitnessFrog.Data
 
             Activities = activities;
             Entries = entries;
-
-             string CommandText = "create table if not exists entries (id INTEGER PRIMARY KEY AUTOINCREMENT, date text not null default date('now'), activityid integer not null references activities(id), duration real not null, intensityid integer not null references intensities(id), exclude boolean, notes text);";
+                         
         }
     }
 }

@@ -20,7 +20,8 @@ namespace Treehouse.FitnessFrog.Data
         /// <returns>A list of entries.</returns>
         public List<Entry> GetEntries()
         {
-            return Data.Entries
+            ConnectDb connectDb = new ConnectDb();
+            return connectDb.GetListForIndex()
                 .Join(
                     Data.Activities, // The inner collection
                     e => e.ActivityId, // The outer selector
