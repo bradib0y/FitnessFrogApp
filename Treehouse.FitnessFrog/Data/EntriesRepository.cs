@@ -44,19 +44,9 @@ namespace Treehouse.FitnessFrog.Data
         /// <returns>An entry.</returns>
         public Entry GetEntry(int id)
         {
-            Entry entry = Data.Entries
-                .Where(e => e.Id == id)
-                .SingleOrDefault();
 
-            // Ensure that the activity property is not null.
-            if (entry.Activity == null)
-            {
-                entry.Activity = Data.Activities
-                    .Where(a => a.Id == entry.ActivityId)
-                    .SingleOrDefault();
-            }
-
-            return entry;
+            ConnectDb c = new ConnectDb();
+            return c.GetEntry(id);
         }
         
         /// <summary>
@@ -80,16 +70,19 @@ namespace Treehouse.FitnessFrog.Data
         /// <param name="entry">The entry to update.</param>
         public void UpdateEntry(Entry entry)
         {
-            // Find the index of the entry that we need to update.
-            int entryIndex = Data.Entries.FindIndex(e => e.Id == entry.Id);
+            //// Find the index of the entry that we need to update.
+            //int entryIndex = Data.Entries.FindIndex(e => e.Id == entry.Id);
 
-            if (entryIndex == -1)
-            {
-                throw new Exception(
-                    string.Format("Unable to find an entry with an ID of {0}", entry.Id));
-            }
+            //if (entryIndex == -1)
+            //{
+            //    throw new Exception(
+            //        string.Format("Unable to find an entry with an ID of {0}", entry.Id));
+            //}
 
-            Data.Entries[entryIndex] = entry;
+            //Data.Entries[entryIndex] = entry;
+
+            ConnectDb c = new ConnectDb();
+            c.UpdateEntry(entry);
         }
 
         /// <summary>
@@ -98,16 +91,19 @@ namespace Treehouse.FitnessFrog.Data
         /// <param name="id">The ID of the entry to delete.</param>
         public void DeleteEntry(int id)
         {
-            // Find the index of the entry that we need to delete.
-            int entryIndex = Data.Entries.FindIndex(e => e.Id == id);
+            //// Find the index of the entry that we need to delete.
+            //int entryIndex = Data.Entries.FindIndex(e => e.Id == id);
 
-            if (entryIndex == -1)
-            {
-                throw new Exception(
-                    string.Format("Unable to find an entry with an ID of {0}", id));
-            }
+            //if (entryIndex == -1)
+            //{
+            //    throw new Exception(
+            //        string.Format("Unable to find an entry with an ID of {0}", id));
+            //}
 
-            Data.Entries.RemoveAt(entryIndex);
+            //Data.Entries.RemoveAt(entryIndex);
+
+            ConnectDb c = new ConnectDb();
+            c.DeleteEntry(id);
         }
     }
 }

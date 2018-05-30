@@ -41,7 +41,10 @@ namespace Treehouse.FitnessFrog.Controllers
 
         public ActionResult Add()
         {
+
+
             var entry = new Entry();
+            
             entry.Date = DateTime.Today.Date;
             SetupActivitiesSelectList();
             return View(entry);
@@ -54,6 +57,15 @@ namespace Treehouse.FitnessFrog.Controllers
 
             if (ModelState.IsValid)
             {
+                List<Entry> entries = _entriesRepository.GetEntries();
+                List<int> ids = new List<int>();
+                foreach (Entry e in entries)
+                {
+                    ids.Add(e.Id);
+                }
+                int newId = ids.Max() + 1;
+                entry.Id = newId;
+
                 ConnectDb c = new ConnectDb();
                 c.AddEntry(entry);
                 TempData["SuccessMessage"] = "Your new entry was successfully added!";
@@ -89,7 +101,8 @@ namespace Treehouse.FitnessFrog.Controllers
             try
             {
                 int i = Convert.ToInt32(id);
-                return View(_entriesRepository.GetEntry(i));
+                ConnectDb c = new ConnectDb();
+                return View(c.GetEntry(i));
             }
             catch (Exception e)
             {
@@ -149,7 +162,8 @@ namespace Treehouse.FitnessFrog.Controllers
                 
         public ActionResult DropDb()
         {
-
+            ConnectDb c = new ConnectDb();
+            c.DropDb();
             return RedirectToAction("Index");
         }
     }
